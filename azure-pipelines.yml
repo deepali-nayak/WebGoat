@@ -63,7 +63,7 @@ steps:
                echo "Failing task because number of critical issues are greater than 5"
                echo $applicationname
                curl -H 'Content-Type: application/json' -d '{"text": "Pipeline failed because number of critical issues are greater than 5"}' $(teams_webhook)
-               curl -H 'Content-Type: application/json' -d '{"text": "'"$(applicationname)"'"}' $(teams_webhook)
+               curl -H 'Content-Type: application/json' -d '{"text": "'"$applicationname"'"}' $(teams_webhook)
                exit 1
              elif [ $HIGH -gt 10 ]
              then
