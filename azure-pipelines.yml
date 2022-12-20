@@ -49,7 +49,7 @@ steps:
              tok3n="${tok3n:1:-1}"
              releasedetails=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/releases/114186')
              scanid=$( echo "$releasedetails" | jq .currentStaticScanId )
-             applicationname=$( echo "$releasedetails" | jq .applicationName )
+             applicationname=$( echo "$releasedetails" | jq .applicationName | sed 's/["]//g')
              scanSummary=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/scans/'${scanid}'/summary')
              CRITICAL=$( echo "$releasedetails" | jq .staticCritical )
              HIGH=$( echo "$releasedetails" | jq .staticHigh )
