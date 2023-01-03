@@ -60,23 +60,24 @@ steps:
              echo "HIGH = $HIGH"
              if [ $CRITICAL -gt 5 ]
              then
-               echo "##[warning]Failing task because number of critical issues are greater than 5"
+               echo "##[error]Failing task because number of critical issues are greater than 5"
                echo $applicationname
                curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of critical issues in FoD SAST are greater than 5 for '$applicationname'"}' $(teams_webhook)
                #exit 1
              elif [ $HIGH -gt 10 ]
              then
-               echo "##[warning]Failing task because number of high issues are greater than 10"
+               echo "##[error]Failing task because number of high issues are greater than 10"
                curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of high issues in FoD SAST are greater than 10 for '$applicationname'"}' $(teams_webhook)
                #exit 1
              elif [ $SUM -gt 50 ]
              then
-               echo "##[warning]Failing task because number of total issues are greater than 50"
+               echo "##[error]Failing task because number of total issues are greater than 50"
                curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because total number of issues in FoD SAST are greater than 50 for '$applicationname'"}' $(teams_webhook)
                #exit 1
              else
                echo "PASSED"
              fi
+  #continueOnError: true            
   displayName: 'Security Gating' 
 
 # - task: Bash@3
