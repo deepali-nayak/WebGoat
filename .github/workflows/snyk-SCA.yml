@@ -38,9 +38,9 @@ jobs:
              echo "HIGH = $HIGH"
              echo "MEDIUM = $MEDIUM"
              echo "LOW = $snykLow"
-             if [ $CRITICAL -gt 5 ]
+             if [ $CRITICAL -gt 0 ]
              then
-               echo "Failing task because number of critical issues are greater than 5"
+               curl -H 'Content-Type: application/json' -d '{"text": "FOA has critical Issues in Snyk"}' https://accenture.webhook.office.com/webhookb2/8a927ca7-def7-4a09-b1fd-48ad9b66c621@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/f65b0d1d813b414590f8733951fde98f/451f7219-9304-415c-ac35-35c71e2e9c9d
                echo "##[error]number of critical issues are greater than 5"
              elif [ $HIGH -gt 10 ]
              then
