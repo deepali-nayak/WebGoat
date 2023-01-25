@@ -34,7 +34,7 @@ jobs:
              HIGH=$(echo "$snykCount" | jq .issueCountsBySeverity.high )
              MEDIUM=$(echo "$snykCount" | jq .issueCountsBySeverity.medium )
              LOW=$(echo "$snykCount" | jq .issueCountsBySeverity.low )
-             SUM=($CRITICAL+$HIGH+$MEDIUM+$LOW)
+             SUM=$(($CRITICAL + $HIGH + $MEDIUM + $LOW))
              echo "CRITICAL = $CRITICAL"
              echo "HIGH = $HIGH"
              echo "MEDIUM = $MEDIUM"
