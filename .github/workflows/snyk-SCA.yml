@@ -33,19 +33,21 @@ jobs:
              CRITICAL=$(echo "$snykCount" | jq .issueCountsBySeverity.critical )
              HIGH=$(echo "$snykCount" | jq .issueCountsBySeverity.high )
              MEDIUM=$(echo "$snykCount" | jq .issueCountsBySeverity.medium )
-             snykLow=$(echo "$snykCount" | jq .issueCountsBySeverity.low )
+             LOW=$(echo "$snykCount" | jq .issueCountsBySeverity.low )
+             SUM=($CRITICAL+$HIGH+$MEDIUM+$LOW)
              echo "CRITICAL = $CRITICAL"
              echo "HIGH = $HIGH"
              echo "MEDIUM = $MEDIUM"
-             echo "LOW = $snykLow"
+             echo "LOW = $LOW"
+             echo "TOTAL = $SUM"
              if [ $CRITICAL -gt 0 ]
              then
                curl -H 'Content-Type: application/json' -d '{"text": "FOA has critical Issues in Snyk"}' ${{secrets.TEAMS_WEBHOOK}}
-               echo "##[error]number of critical issues are greater than 5"
+               echo "##[error]Critical Issues : $CRITICAL"
              elif [ $HIGH -gt 10 ]
              then
                echo "Failing task because number of high issues are greater than 10" 
-               echo "##[error]number of High issues are greater than 10"
+               echo "##[error]High Issues : $HIGH"
              else
                echo "PASSED"
              fi           
