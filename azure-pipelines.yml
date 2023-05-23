@@ -47,7 +47,7 @@ steps:
       auth=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' -d 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.emea.fortify.com/oauth/token')
              tok3n=$( echo "$auth" | jq '.["access_token"]' )
              tok3n="${tok3n:1:-1}"
-             releasedetails=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/releases/114186')
+             releasedetails=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/releases/'$(RELEASE-ID))
              scanid=$( echo "$releasedetails" | jq .currentStaticScanId )
              applicationname=$( echo "$releasedetails" | jq .applicationName | sed 's/["]//g')
              scanSummary=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/scans/'${scanid}'/summary')
@@ -62,17 +62,17 @@ steps:
              then
                echo "##[error]Failing task because number of critical issues are greater than 5"
                echo $applicationname
-               curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of critical issues in FoD SAST are greater than 5 for '$applicationname'"}' $(teams_webhook)
+               #curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of critical issues in FoD SAST are greater than 5 for '$applicationname'"}' $(teams_webhook)
                exit 1
              elif [ $HIGH -gt 10 ]
              then
                echo "##[error]Failing task because number of high issues are greater than 10"
-               curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of high issues in FoD SAST are greater than 10 for '$applicationname'"}' $(teams_webhook)
+               #curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because number of high issues in FoD SAST are greater than 10 for '$applicationname'"}' $(teams_webhook)
                #exit 1
              elif [ $SUM -gt 50 ]
              then
                echo "##[error]Failing task because number of total issues are greater than 50"
-               curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because total number of issues in FoD SAST are greater than 50 for '$applicationname'"}' $(teams_webhook)
+               #curl -H 'Content-Type: application/json' -d '{"text": "Pipeline had warnings because total number of issues in FoD SAST are greater than 50 for '$applicationname'"}' $(teams_webhook)
                #exit 1
              else
                echo "PASSED"
