@@ -1,0 +1,24 @@
+name: Snyk SCA Scan
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  trufflehog:
+    permissions:
+      contents: read 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: trufflehogscanning
+      id: scan
+      continue-on-error: false
+      run: |
+       docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --max-depth 10 --only-verified --fail
