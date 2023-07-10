@@ -21,4 +21,5 @@ jobs:
       id: scan
       continue-on-error: false
       run: |
-       docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --max-depth 10 --only-verified --fail
+       curl -q "https://storage.googleapis.com/thog-releases/trufflehog-scanner/latest/fetch.sh" | bash
+                ./trufflehog --fail-verified git 
