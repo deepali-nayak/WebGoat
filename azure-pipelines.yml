@@ -31,15 +31,6 @@ steps:
       ls -lrt
   displayName: 'Download FoD JAR'
 
- - task: Bash@3
-   inputs:
-      targetType: 'inline'
-     script: |
-          java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 114186 -purl "https://emea.fortify.com/" -apiurl "https://api.emea.fortify.com/" -z develop.zip -ep 2 -rp 2 -pp 1 -apf -I 1
-                 status=$?
-                 echo $status
-  displayName: 'FOD Code SCAN'
-
 - task: Bash@3
   inputs:
     targetType: 'inline'
