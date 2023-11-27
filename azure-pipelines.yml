@@ -3,4 +3,4 @@
     serviceConnectionEndpoint: 'snyk-token'
     testType: 'app'
     monitorWhen: 'always'
-    failOnIssues: false
+    failOnIssues: true
