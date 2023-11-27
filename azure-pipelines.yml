@@ -1,4 +1,4 @@
-- task: SnykSecurityScan@1
+- task: SnykSecurityScan
   inputs:
     serviceConnectionEndpoint: 'snyk-token'
     testType: 'app'
