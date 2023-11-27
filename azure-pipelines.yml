@@ -6,13 +6,12 @@
     failOnIssues: true
 
 run:|
-echo "----------Download Latest Snyk CLI-----------"
-        curl -Lo ./snyk "https://github.com/snyk/snyk/releases/download/v1.1159.0/snyk-linux"
-        chmod +x snyk
-        ls -lrt
-        echo "----------Authenticating Snyk-----------"
-        ./snyk auth ${{secrets.snyk-token-update}}
-        echo "----------Snyk Monitor-----------"
-        ./snyk monitor --all-projects
-        echo "----------Snyk Scanning and failing build in CI-----------"
-        ./snyk test --all-projects --severity-threshold=high --fail-on=upgradable
+curl -Lo ./snyk "https://github.com/snyk/snyk/releases/download/v1.1159.0/snyk-linux"
+chmod +x snyk
+ls -lrt
+echo "----------Authenticating Snyk-----------"
+./snyk auth ${{secrets.snyk-token-update}}
+echo "----------Snyk Monitor-----------"
+./snyk monitor --all-projects
+echo "----------Snyk Scanning and failing build in CI-----------"
+./snyk test --all-projects --severity-threshold=high --fail-on=upgradable
