@@ -1,5 +1,6 @@
 - task: SnykSecurityScan@1
   inputs:
+    serviceConnectionEndpoint: 'snyk-token'
     testType: 'app'
     monitorWhen: 'always'
     failOnIssues: false
